@@ -1,7 +1,9 @@
 package com.example.dao;
 
+import com.example.config.ConfigClass;
 import com.example.entity.Account;
 import com.example.exception.DaoException;
+import com.example.jdbcUtil.H2DataSourseJdbcUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -10,6 +12,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class AccountDaoImpl implements AccountDao {
 
     private final static String INSERT_ACCOUNT_SQL =
@@ -22,13 +25,17 @@ public class AccountDaoImpl implements AccountDao {
                     "email = ?, birthday = ?, sex = ?, balance = ? WHERE id = ?;";
 
 
+//    DataSource dataSource;
+//
+//    @Autowired
+//    public AccountDaoImpl(DataSource dataSource) {
+//        this.dataSource = dataSource;
+//    }
     DataSource dataSource;
 
-    @Autowired
-    public AccountDaoImpl(DataSource dataSource) {
-        this.dataSource = dataSource;
+    public AccountDaoImpl() {
+        this.dataSource = ConfigClass.getDataSource();
     }
-
     @Override
     public void save(Account account) {
         try(Connection connection = dataSource.getConnection()) {

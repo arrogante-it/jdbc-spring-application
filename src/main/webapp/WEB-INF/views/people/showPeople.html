@@ -5,6 +5,7 @@
   <title>showPeople</title>
 </head>
 <body>
+- showPeolePage
 <dif th:each="person : ${people}">
   <a th:href="@{/people/{id} (id=${person.getId()})}" th:text="${person.getName()}">user_information</a>
   <br/>
